@@ -9,7 +9,7 @@ https://github.com/VeerMuchandi/pipeline-example
 
 Create a new project on Openshift "CICD"
 
-On this project copypaste the YAML:
+On this project copy & paste the YAML:
 
 https://raw.githubusercontent.com/VeerMuchandi/pipeline-example/master/pipeline.yml
 
