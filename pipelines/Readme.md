@@ -13,7 +13,9 @@ On this project copy & paste the YAML:
 
 https://raw.githubusercontent.com/VeerMuchandi/pipeline-example/master/pipeline.yml
 
-Wait for the jenkins pods to be up and running (pod-running.png)
+Wait for the jenkins pods to be up and running 
+
+![](pod-running.png)
 
 Now you can click on the route.
 
@@ -27,7 +29,9 @@ Allow and go on.
 
 Now add a new app to CICD projects
 
-Config the app disabling automatic build and deploy (building-configuration.png)
+Config the app disabling automatic build and deploy
+
+![](building-configuration.png)
 
 
 # Managing pipeline across projects
@@ -40,6 +44,7 @@ Ve will create two stages:
 
 We started with:
 
+```
 node('maven') {
 	stage 'build'
 	openshiftBuild(buildConfig: 'myphp', showBuildLogs: 'true')
@@ -47,9 +52,11 @@ node('maven') {
 	openshiftDeploy(deploymentConfig: 'myphp')
 	openshiftScale(deploymentConfig: 'myphp',replicaCount: '2')
 }
+```
 
 We will update to:
 
+```
 node('maven') {
 	stage 'buildInDevelopment'
 	openshiftBuild(namespace: 'development', buildConfig: 'myapp', showBuildLogs: 'true')
@@ -61,7 +68,7 @@ stage 'deployInTesting'
 	openshiftDeploy(namespace: 'testing', deploymentConfig: 'myapp', )
 	openshiftScale(namespace: 'testing', deploymentConfig: 'myapp',replicaCount: '3')
 }
-
+```
 
 Here are the commands I used from the OpenShift CLI:
 
@@ -87,7 +94,12 @@ oc policy add-role-to-group system:image-puller system:serviceaccounts:testing -
 
 Create a project in the ```development``` project (without automatic build)
 
-In the build section (get-development-image.png) get the image "url" eg:
+In the build section:
+
+
+![](get-development-image.png) 
+
+get the image "url" eg:
 
 ```
 172.30.252.48:5000/development/myapp
@@ -123,10 +135,12 @@ oc expose svc myapp
 
 # Useful commands
 
+```
 oc project <your-project>
 
 oc get bc
+```
 
-will list the buildconfigs and the deployed pipelines
+Will list the buildconfigs and the deployed pipelines, you can add other pipelines to this.
 
 
